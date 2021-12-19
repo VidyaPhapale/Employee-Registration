@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+   
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>CRUD Application</title> 
+    <style type="text/css">
+    label{
+        width: 100px;
+        display:inline-block;
+    }
+    table,th,td{
+        border:1px solid black;
+        border-collapse: collapse;
+    }
+    table.center{
+        margin-right: auto;
+        margin-left: auto;
+
+    }
+    </style>
+  </head>
+  <body>
+   <h2 style="text-align: center">Employee Registration</h2>
+   <div class="container mt-3">
+
+       {% for message in messages %}
+       <p class="alert alert-success mt-3">{{message}}</p>
+       {% endfor %}
+
+
+       {% if sel_employee %}
+    <form method="POST" action="{% url 'update_employee' sel_employee.id %}">
+     {% csrf_token %}
+      <div class="from-group mb-3">
+          <label>Employee Name</label>
+          <input type="text" value ="{{sel_employee.name}}" name="name" class="form-control" placeholder="Enter Employee Name">
+        </div>
+        <br>
+      <div class="from-group mb-3">
+        <label>Email address</label>
+        <input type="email" value ="{{sel_employee.Email_id}}" name="Email_id" class="form-control">
+      </div>
+      <br>
+      <div class="from-group mb-3">
+          <label>Contact No</label>
+          <input type="tel" value ="{{sel_employee.Contact_No}}" name="Contact_No" class="form-control">
+        </div>
+        <br>
+        <div class="from-group mb-3">
+          <label>Location</label>
+          <input type="textarea" value ="{{sel_employee.Location}}" name="Location" class="form-control">
+        </div>
+        <br>
+        <div class="from-group mb-3">
+          <label>Image</label>
+          <input type="file" value ="{{sel_employee.Image}}" name="Image" class="form-control">
+        </div>
+        <br>
+      <div class="test-center mt-4">
+      <button type="submit" class="btn btn-success">UPDATE</button>
+      </div>
+  </form>
+
+
+     {% else %}
+    <form method="POST"  action="{% url 'add_employee' %}">
+     {% csrf_token %}
+        <div class="from-group mb-3">
+            <label>Employee Name</label>
+            <input type="text" name="name" class="form-control" placeholder="Enter Employee Name">
+          </div><br>
+        <div class="from-group mb-3">
+          <label>Email address</label>
+          <input type="email" name="Email_id" class="form-control">
+        </div>
+        <br>
+        <div class="from-group mb-3">
+            <label>Contact No</label>
+            <input type="tel" name="Contact_No" class="form-control">
+          </div>
+          <br>
+          <div class="from-group mb-3">
+            <label>Location</label>
+            <input type="textarea" name="Location" class="form-control">
+          </div>
+          <br>
+          <div class="from-group mb-3">
+            <label>Image</label>
+            <input type="file" name="Image" class="form-control">
+          </div>
+          <br>
+           
+        <div class="test-center mt-4">
+        <button type="submit" class="btn btn-success">SAVE</button>
+        </div>
+    </form>
+  {% endif %}
+<br>
+<br>    
+    
+    
+    <div class="mt-5">
+         
+        <table class="center">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">name</th>
+                <th scope="col">Email_id</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Location</th>
+                <th scope="col">Image</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in employee_list %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{i.name}}</td>
+                <td>{{i.Email_id}}</td>
+                <td>{{i.Contact_No}}</td>
+                <td>{{i.Location}}</td>
+                <td>
+                    <img src="b2.jpg"></img>
+                </td>
+                <td>
+                    <a href="{% url 'edit_employee' i.id %}" class="btn btn-warning">EDIT</a>
+                </td>
+                <td>
+                    <a href="{% url 'delete_employee' i.id%}" class="btn btn-danger">DELETE</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+    </div>
+
+   </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    
+  </body>
+</html>
